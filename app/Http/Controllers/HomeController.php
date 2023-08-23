@@ -13,7 +13,7 @@ class HomeController extends Controller
 
         $posts    = Post::where("status" , 1)->orderBy("id" , "desc")->take(3)->get();
         $comments = Comment::where("status" , 1)->orderBy("id" , "desc")->take(3)->get();
-        return view("blog.index" , compact('posts' , 'comments'));
+        return view("index" , compact('posts' , 'comments'));
     }
 
     public function contact(){

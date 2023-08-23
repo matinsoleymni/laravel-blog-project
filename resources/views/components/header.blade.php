@@ -5,7 +5,7 @@
     <div>
         <ul class="flex gap-5 text-lg items-center">
             <li><a href="{{route('home')}}">Home</a></li>
-            <li><a href="{{route('blog.index')}}">Blog</a></li>
+            <li><a href="{{route('posts.index')}}">Blog</a></li>
             @guest
                 <li><a href="{{route("login.index")}}">Login</a></li>
             @endguest
