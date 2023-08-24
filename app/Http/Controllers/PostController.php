@@ -14,8 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        $comments = Comment::all();
+        $posts = Post::orderBy("id" , "desc")->get();
+        $comments = Comment::orderBy("id" , "desc")->get();
         return view("blog.index" , compact("posts" , "comments"));
     }
 
@@ -32,38 +32,53 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        // $filename = now().$request->file->extension;
+        // dd($filename);
+        // $request->image->move(public_path('images') , );
+        Post::create([
+            // "image" => null,
+            "title" => $request->title,
+            "description" => $request->description,
+            "body"  => $request->body,
+            "user_id" => auth()->user()->id,
+            "status" => 0
+        ]);
+
+        return redirect()->route("panel.posts");
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function ok(Post $post){
+        $post->update([
+            "status" => 1,
+        ]);
+        return redirect()->route("panel.index");
+    }
+
+    public function hide(Post $post){
+        $post->update([
+            "status" => 0
+        ]);
+        return redirect()->route("panel.posts");
+    }
+
     public function show(Post $post)
     {
         return view("blog.show" , compact("post"));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Post $post)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePostRequest $request, Post $post)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route("panel.posts");
     }
 }

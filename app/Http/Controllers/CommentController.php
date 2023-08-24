@@ -20,9 +20,11 @@ class CommentController extends Controller
         return redirect()->back()->with("status" , "your comment added admin confirm this to show public");
     }
 
-    public function show(Comment $comment)
-    {
-        //
+    public function ok(Comment $comment){
+        $comment->update([
+            "status" => 1,
+        ]);
+        return redirect()->route("panel.index");
     }
 
     public function destroy(Comment $comment)

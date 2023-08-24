@@ -29,7 +29,7 @@ class LoginController extends Controller
             "password" => Hash::make($request->password),
         ]);
 
-        return redirect()->route("blog.index");
+        return redirect()->route("posts.index");
     }
 
     public function  check(StoreLoginRequest $request){

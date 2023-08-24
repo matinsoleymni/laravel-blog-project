@@ -15,10 +15,13 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->is_admin){
-            return $next($request);
-        }else {
+        if(auth()->user()){
+            if(auth()->user()->is_admin){
+                return $next($request);
+            }
             return redirect()->route("home");
+        }else {
+            return redirect()->route("login.index");
         }
     }
 }
